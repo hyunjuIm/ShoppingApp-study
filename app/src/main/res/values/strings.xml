@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">aop-part5-chapter02</string>
 
-    <string name="empty_history_text">상품이 없습니다.</string>
+    <string name="empty_products_text">상품이 없습니다.</string>
     <string name="title">제목</string>
     <string name="description">할일을 입력해주세요.</string>
     <string name="delete">삭제</string>
