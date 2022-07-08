@@ -13,7 +13,7 @@ internal class ProductListViewModel(
 ) : BaseViewModel() {
 
     private var _productListStateLiveData =
-        MutableLiveData<ProductListState>(ProductListState.UnInitialized)
+        MutableLiveData<ProductListState>(ProductListState.Uninitialized)
     val productListStateLiveData: LiveData<ProductListState> = _productListStateLiveData
 
     override fun fetchDate(): Job = viewModelScope.launch {

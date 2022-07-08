@@ -4,7 +4,7 @@ import com.hyunju.shoppingapp.data.entity.product.ProductEntity
 
 sealed class ProductListState {
 
-    object UnInitialized : ProductListState()
+    object Uninitialized : ProductListState()
 
     object Loading : ProductListState()
 

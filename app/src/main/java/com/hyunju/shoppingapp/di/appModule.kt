@@ -8,6 +8,8 @@ import com.hyunju.shoppingapp.data.repository.DefaultProductRepository
 import com.hyunju.shoppingapp.data.repository.ProductRepository
 import com.hyunju.shoppingapp.domain.GetProductItemUseCase
 import com.hyunju.shoppingapp.domain.GetProductListUseCase
+import com.hyunju.shoppingapp.domain.OrderProductItemUseCase
+import com.hyunju.shoppingapp.presentation.detail.ProductDetailViewModel
 import com.hyunju.shoppingapp.presentation.list.ProductListViewModel
 import com.hyunju.shoppingapp.presentation.main.MainViewModel
 import com.hyunju.shoppingapp.presentation.profile.ProfileViewModel
@@ -21,6 +23,7 @@ val appModule = module {
     viewModel { MainViewModel() }
     viewModel { ProductListViewModel(get()) }
     viewModel { ProfileViewModel() }
+    viewModel { (productId: Long) -> ProductDetailViewModel(productId, get(), get()) }
 
     // Coroutines Dispatcher
     single { Dispatchers.Main }
@@ -29,6 +32,7 @@ val appModule = module {
     // UseCases
     factory { GetProductItemUseCase(get()) }
     factory { GetProductListUseCase(get()) }
+    factory { OrderProductItemUseCase(get()) }
 
     // Repositories
     single<ProductRepository> { DefaultProductRepository(get(), get()) }

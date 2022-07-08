@@ -1,7 +1,5 @@
 package com.hyunju.shoppingapp.presentation.list
 
-import android.app.Instrumentation
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isGone
@@ -32,8 +30,8 @@ internal class ProductListFragment :
 
     override fun observeData() = viewModel.productListStateLiveData.observe(this) {
         when (it) {
-            is ProductListState.UnInitialized -> {
-                initViews(binding)
+            is ProductListState.Uninitialized -> {
+                initViews()
             }
             is ProductListState.Loading -> {
                 handleLoadingState()
@@ -47,7 +45,7 @@ internal class ProductListFragment :
         }
     }
 
-    private fun initViews(binding: FragmentProductListBinding) = with(binding) {
+    private fun initViews() = with(binding) {
         recyclerView.adapter = adapter
 
         refreshLayout.setOnRefreshListener {
