@@ -12,5 +12,5 @@ interface ProductApiService {
     suspend fun getProducts(): Response<ProductsResponse>
 
     @GET("products/{productId}")
-    suspend fun getProducts(@Path("productId") productId: Long): Response<ProductResponse>
+    suspend fun getProduct(@Path("productId") productId: Long): Response<ProductResponse>
 }

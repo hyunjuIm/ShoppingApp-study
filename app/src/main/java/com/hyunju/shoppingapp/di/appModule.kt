@@ -1,5 +1,7 @@
 package com.hyunju.shoppingapp.di
 
+import com.hyunju.shoppingapp.data.db.provideDB
+import com.hyunju.shoppingapp.data.db.provideToDoDao
 import com.hyunju.shoppingapp.data.network.buildOkHttpClient
 import com.hyunju.shoppingapp.data.network.provideGsonConverterFactory
 import com.hyunju.shoppingapp.data.network.provideProductApiService
@@ -14,6 +16,7 @@ import com.hyunju.shoppingapp.presentation.list.ProductListViewModel
 import com.hyunju.shoppingapp.presentation.main.MainViewModel
 import com.hyunju.shoppingapp.presentation.profile.ProfileViewModel
 import kotlinx.coroutines.Dispatchers
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -35,10 +38,14 @@ val appModule = module {
     factory { OrderProductItemUseCase(get()) }
 
     // Repositories
-    single<ProductRepository> { DefaultProductRepository(get(), get()) }
+    single<ProductRepository> { DefaultProductRepository(get(), get(), get()) }
 
     single { provideGsonConverterFactory() }
     single { buildOkHttpClient() }
     single { provideProductRetrofit(get(), get()) }
     single { provideProductApiService(get()) }
+
+    // Database
+    single { provideDB(androidApplication()) }
+    single { provideToDoDao(get()) }
 }

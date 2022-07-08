@@ -7,6 +7,8 @@ import com.hyunju.shoppingapp.databinding.FragmentProductListBinding
 import com.hyunju.shoppingapp.extensions.toast
 import com.hyunju.shoppingapp.presentation.BaseFragment
 import com.hyunju.shoppingapp.presentation.adapter.ProductListAdapter
+import com.hyunju.shoppingapp.presentation.detail.ProductDetailActivity
+import com.hyunju.shoppingapp.presentation.main.MainActivity
 import org.koin.android.ext.android.inject
 
 internal class ProductListFragment :
@@ -26,6 +28,9 @@ internal class ProductListFragment :
     private val startProductDetailForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             // 성공적으로 처리 완료 이후 동작
+            if (result.resultCode == ProductDetailActivity.PRODUCT_ORDERED_RESULT_CODE) {
+                (requireActivity() as MainActivity).viewModel.refreshOrderList()
+            }
         }
 
     override fun observeData() = viewModel.productListStateLiveData.observe(this) {
@@ -67,10 +72,9 @@ internal class ProductListFragment :
             emptyResultTextView.isGone = true
             recyclerView.isGone = false
             adapter.setProductList(state.productList) {
-//                startProductDetailForResult.launch(
-//                    ProductDerailActivity.newIntent(requireContext(), it.id)
-//                )
-                requireContext().toast("Product Entity : $it")
+                startProductDetailForResult.launch(
+                    ProductDetailActivity.newIntent(requireContext(), it.id)
+                )
             }
         }
     }
