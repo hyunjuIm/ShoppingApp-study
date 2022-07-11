@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.hyunju.shoppingapp.data.preference.PreferenceManager
+import com.hyunju.shoppingapp.domain.DeleteOrderedProductListUseCase
 import com.hyunju.shoppingapp.domain.GetOrderedProductListUseCase
 import com.hyunju.shoppingapp.presentation.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,8 @@ import kotlinx.coroutines.withContext
 
 internal class ProfileViewModel(
     private val preferenceManager: PreferenceManager,
-    private val getOrderedProductListUseCase: GetOrderedProductListUseCase
+    private val getOrderedProductListUseCase: GetOrderedProductListUseCase,
+    private val deleteOrderedProductListUseCase: DeleteOrderedProductListUseCase
 ) : BaseViewModel() {
 
     private var _profileStateLiveData = MutableLiveData<ProfileState>(ProfileState.Uninitialized)
@@ -58,6 +60,14 @@ internal class ProfileViewModel(
                 ProfileState.Success.NotRegistered
             )
         }
+    }
+
+    fun signOut() = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            preferenceManager.removeIdToken()
+        }
+        deleteOrderedProductListUseCase()
+        fetchDate()
     }
 
 }

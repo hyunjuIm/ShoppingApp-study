@@ -8,6 +8,7 @@ import com.google.android.material.navigation.NavigationView
 import com.hyunju.shoppingapp.R
 import com.hyunju.shoppingapp.databinding.ActivityMainBinding
 import com.hyunju.shoppingapp.presentation.BaseActivity
+import com.hyunju.shoppingapp.presentation.BaseFragment
 import com.hyunju.shoppingapp.presentation.list.ProductListFragment
 import com.hyunju.shoppingapp.presentation.profile.ProfileFragment
 import org.koin.android.ext.android.inject
@@ -62,7 +63,7 @@ internal class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>()
             is MainState.RefreshOrderList -> {
                 binding.bottomNav.selectedItemId = R.id.menu_profile
                 val fragment = supportFragmentManager.findFragmentByTag(ProfileFragment.TAG)
-
+                (fragment as? BaseFragment<*, *>)?.viewModel?.fetchDate()
             }
         }
     }

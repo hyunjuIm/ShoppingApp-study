@@ -9,9 +9,8 @@ import com.hyunju.shoppingapp.data.network.provideProductRetrofit
 import com.hyunju.shoppingapp.data.preference.PreferenceManager
 import com.hyunju.shoppingapp.data.repository.DefaultProductRepository
 import com.hyunju.shoppingapp.data.repository.ProductRepository
-import com.hyunju.shoppingapp.domain.GetProductItemUseCase
-import com.hyunju.shoppingapp.domain.GetProductListUseCase
-import com.hyunju.shoppingapp.domain.OrderProductItemUseCase
+import com.hyunju.shoppingapp.domain.*
+import com.hyunju.shoppingapp.domain.DeleteOrderedProductListUseCase
 import com.hyunju.shoppingapp.presentation.detail.ProductDetailViewModel
 import com.hyunju.shoppingapp.presentation.list.ProductListViewModel
 import com.hyunju.shoppingapp.presentation.main.MainViewModel
@@ -27,7 +26,7 @@ val appModule = module {
     // ViewModels
     viewModel { MainViewModel() }
     viewModel { ProductListViewModel(get()) }
-    viewModel { ProfileViewModel(get()) }
+    viewModel { ProfileViewModel(get(), get(), get()) }
     viewModel { (productId: Long) -> ProductDetailViewModel(productId, get(), get()) }
 
     // Coroutines Dispatcher
@@ -38,6 +37,8 @@ val appModule = module {
     factory { GetProductItemUseCase(get()) }
     factory { GetProductListUseCase(get()) }
     factory { OrderProductItemUseCase(get()) }
+    factory { GetOrderedProductListUseCase(get()) }
+    factory { DeleteOrderedProductListUseCase(get()) }
 
     // Repositories
     single<ProductRepository> { DefaultProductRepository(get(), get(), get()) }

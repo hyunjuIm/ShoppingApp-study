@@ -76,7 +76,7 @@ internal class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileB
             signInGoogle()
         }
         logoutButton.setOnClickListener {
-
+            viewModel.signOut()
         }
     }
 
@@ -105,6 +105,8 @@ internal class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileB
     }
 
     private fun handleLoginState(state: ProfileState.Login) = with(binding) {
+        progressBar.isVisible = true
+
         val credential = GoogleAuthProvider.getCredential(state.idToken, null)
         firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()) { task ->
